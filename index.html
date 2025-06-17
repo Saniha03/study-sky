@@ -1,985 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudySky -Neela's Study Tracker</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(
-          135deg,
-          #87ceeb 0%,
-          #4682b4 50%,
-          #1e90ff 100%
-        );
-        min-height: 100vh;
-        color: #333;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-
-      .header {
-        text-align: center;
-        margin-bottom: 30px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-      }
-
-      .header h1 {
-        color: #1e90ff;
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-tabs {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 30px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 15px;
-        padding: 5px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-tab {
-        padding: 12px 24px;
-        margin: 0 5px;
-        border: none;
-        background: transparent;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        color: #4682b4;
-      }
-
-      .nav-tab.active {
-        background: linear-gradient(45deg, #1e90ff, #4682b4);
-        color: white;
-        box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
-      }
-
-      .tab-content {
-        display: none;
-      }
-
-      .tab-content.active {
-        display: block;
-      }
-
-      .card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 12px;
-        padding: 25px;
-        margin-bottom: 20px;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .subject-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      .subject-card {
-        background: linear-gradient(
-          45deg,
-          rgba(135, 206, 235, 0.1),
-          rgba(30, 144, 255, 0.1)
-        );
-        border: 2px solid rgba(30, 144, 255, 0.2);
-        border-radius: 8px;
-        padding: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .subject-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 20px rgba(30, 144, 255, 0.2);
-      }
-
-      .subject-title {
-        color: #1e90ff;
-        font-size: 1.4em;
-        font-weight: bold;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .subject-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: linear-gradient(45deg, #1e90ff, #4682b4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 12px;
-      }
-
-      .progress-bar {
-        background: rgba(30, 144, 255, 0.1);
-        border-radius: 6px;
-        height: 12px;
-        margin: 10px 0;
-        overflow: hidden;
-        border: 1px solid rgba(30, 144, 255, 0.2);
-      }
-
-      .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, #87ceeb, #1e90ff);
-        border-radius: 6px;
-        transition: width 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 0.7em;
-      }
-
-      .weekly-planner {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      .day-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 8px;
-        padding: 15px;
-        min-height: 150px;
-        border: 2px solid rgba(30, 144, 255, 0.1);
-        transition: box-shadow 0.2s ease;
-      }
-
-      .day-card.light-day-card {
-        border-color: rgba(135, 206, 235, 0.5);
-        background: rgba(135, 206, 235, 0.05);
-      }
-
-      .day-card.heavy-day-card {
-        border-color: rgba(30, 144, 255, 0.5);
-        background: rgba(30, 144, 255, 0.05);
-      }
-
-      .day-header {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-        text-align: center;
-        padding: 8px;
-        background: rgba(30, 144, 255, 0.05);
-        border-radius: 4px;
-      }
-
-      .task-item {
-        display: flex;
-        align-items: center;
-        margin: 6px 0;
-        padding: 8px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 6px;
-        transition: background 0.2s ease;
-      }
-
-      .task-item:hover {
-        background: rgba(30, 144, 255, 0.1);
-      }
-
-      .checkbox {
-        width: 16px;
-        height: 16px;
-        margin-right: 8px;
-        cursor: pointer;
-        accent-color: #1e90ff;
-      }
-
-      .task-text {
-        flex: 1;
-        font-size: 0.85em;
-      }
-
-      .task-text.completed {
-        text-decoration: line-through;
-        opacity: 0.6;
-      }
-
-      .add-task-btn {
-        width: 100%;
-        padding: 8px;
-        background: linear-gradient(45deg, #87ceeb, #1e90ff);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 0.9em;
-        transition: all 0.2s ease;
-        margin-top: 10px;
-      }
-
-      .add-task-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3);
-      }
-
-      .overall-progress {
-        text-align: center;
-        margin: 20px 0;
-      }
-
-      .circular-progress {
-        width: 160px;
-        height: 160px;
-        margin: 0 auto;
-        position: relative;
-        border-radius: 50%;
-        background: conic-gradient(#1e90ff 0deg, #87ceeb 360deg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .circular-progress::before {
-        content: "";
-        width: 130px;
-        height: 130px;
-        background: white;
-        border-radius: 50%;
-        position: absolute;
-      }
-
-      .progress-text {
-        position: relative;
-        z-index: 1;
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #1e90ff;
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 15px;
-        margin-top: 20px;
-      }
-
-      .stat-card {
-        text-align: center;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 8px;
-        border: 2px solid rgba(30, 144, 255, 0.1);
-      }
-
-      .stat-number {
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #1e90ff;
-        margin-bottom: 5px;
-      }
-
-      .stat-label {
-        color: #4682b4;
-        font-weight: 600;
-        font-size: 0.9em;
-      }
-
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-      }
-
-      .modal-content {
-        background: white;
-        border-radius: 12px;
-        padding: 20px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      }
-
-      .modal-content h2 {
-        color: #1e90ff;
-        margin-bottom: 20px;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-      }
-
-      .form-group label {
-        display: block;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
-      }
-
-      .form-group select,
-      .form-group input {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1em;
-      }
-
-      .modal-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-      }
-
-      .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.2s ease;
-      }
-
-      .btn-primary {
-        background: linear-gradient(45deg, #1e90ff, #4682b4);
-        color: white;
-      }
-
-      .btn-primary:hover {
-        opacity: 0.9;
-      }
-
-      .btn-secondary {
-        background: #ddd;
-        color: #333;
-      }
-
-      .btn-secondary:hover {
-        background: #ccc;
-      }
-
-      .alert {
-        background: #ffebee;
-        color: #c62828;
-        padding: 10px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      .week-selector {
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        justify-content: center;
-      }
-
-      .week-selector label {
-        font-weight: bold;
-        color: #333;
-      }
-
-      .week-selector select {
-        padding: 8px;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-      }
-
-      @media (max-width: 768px) {
-        .weekly-planner {
-          grid-template-columns: 1fr;
-        }
-
-        .header h1 {
-          font-size: 2em;
-        }
-
-        .nav-tabs {
-          flex-wrap: wrap;
-        }
-
-        .subject-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .modal-content {
-          width: 95%;
-        }
-      }
-
-      .decorative-element {
-        position: fixed;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .cloud {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50px;
-        animation: float 6s ease-in-out infinite;
-      }
-
-      .cloud:nth-child(1) {
-        width: 100px;
-        height: 40px;
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-      }
-
-      .cloud:nth-child(2) {
-        width: 80px;
-        height: 30px;
-        top: 20%;
-        right: 15%;
-        animation-delay: 2s;
-      }
-
-      .cloud:nth-child(3) {
-        width: 120px;
-        height: 50px;
-        bottom: 20%;
-        left: 5%;
-        animation-delay: 4s;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Decorative clouds -->
-    <div class="decorative-element cloud"></div>
-    <div class="decorative-element cloud"></div>
-    <div class="decorative-element cloud"></div>
-
-    <div class="container">
-      <div class="header">
-        <h3>StudySky -Neela's Study Tracker 💙</h3>
-        <p>My journey keeping mi cielo in the heart starts here 💙</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSC & Medical Admission Study Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #e0f2fe, #bae6fd, #7dd3fc);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+  <div class="bg-white rounded-lg shadow-xl p-6 max-w-4xl w-full">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-4">HSC & Medical Admission Study Planner</h1>
+    <p class="text-lg text-gray-700 mb-6 text-center">Plan your 2300-hour study journey from June 2025 to January 2027!</p>
+
+    <!-- Study Goals and Instructions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-blue-50 p-4 rounded-lg">
+        <h2 class="text-xl font-semibold text-blue-700">Study Goals</h2>
+        <p class="text-gray-600">Total: 2300 hours</p>
+        <ul class="list-disc list-inside text-gray-600">
+          <li>Biology: 575h (25%)</li>
+          <li>Physics: 460h (20%)</li>
+          <li>Chemistry: 460h (20%)</li>
+          <li>Higher Maths: 345h (15%)</li>
+          <li>Bangla: 184h (8%)</li>
+          <li>English: 184h (8%)</li>
+          <li>ICT: 92h (4%)</li>
+          <li>GK & Others: 92h (4%)</li>
+        </ul>
       </div>
-
-      <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('overview')">
-          📊 Overview
-        </button>
-        <button class="nav-tab" onclick="showTab('weekly')">
-          📅 Weekly Planner
-        </button>
-        <button class="nav-tab" onclick="showTab('progress')">
-          📈 Progress
-        </button>
-      </div>
-
-      <!-- Overview Tab -->
-      <div id="overview" class="tab-content active">
-        <div class="card">
-          <h2 style="color: #1e90ff; margin-bottom: 20px">
-            📚 Subject Overview
-          </h2>
-          <div class="subject-grid" id="subject-grid"></div>
-        </div>
-      </div>
-
-      <!-- Weekly Planner Tab -->
-      <div id="weekly" class="tab-content">
-        <div class="card">
-          <h2 style="color: #1e90ff; margin-bottom: 20px">
-            📅 Weekly Study Planner
-          </h2>
-          <p style="margin-bottom: 20px; color: #666">
-            Plan your self-study flexibly. Max 4.5 hours/day. Monday–Friday are
-            heavy days, Saturday–Sunday are light days.
-          </p>
-          <div class="week-selector">
-            <label for="week-select">Current Week:</label>
-            <select id="week-select" onchange="updateWeeklyPlanner()"></select>
-          </div>
-          <div class="weekly-planner" id="weekly-planner"></div>
-        </div>
-      </div>
-
-      <!-- Progress Tab -->
-      <div id="progress" class="tab-content">
-        <div class="card">
-          <div class="overall-progress">
-            <h2 style="color: #1e90ff; margin-bottom: 20px">
-              📈 Overall Progress
-            </h2>
-            <div class="circular-progress" id="circular-progress">
-              <div class="progress-text" id="progress-text">0%</div>
-            </div>
-            <p id="progress-details" style="margin-top: 20px; color: #666"></p>
-          </div>
-          <div class="stats-grid" id="stats-grid"></div>
-        </div>
-      </div>
-
-      <!-- Task Modal -->
-      <div class="modal" id="task-modal">
-        <div class="modal-content">
-          <h2>Add New Task</h2>
-          <div id="modal-alert" class="alert" style="display: none"></div>
-          <form id="task-form">
-            <div class="form-group">
-              <label for="task-subject">Subject</label>
-              <select id="task-subject">
-                <option value="Physics">Physics</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Biology">Biology</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Bangla">Bangla</option>
-                <option value="English">English</option>
-                <option value="ICT">ICT</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="task-type">Task Type</label>
-              <select id="task-type">
-                <option value="Video watching">Video watching</option>
-                <option value="Book reading">Book reading</option>
-                <option value="Note-taking">Note-taking</option>
-                <option value="Problem solving (HSC)">
-                  Problem solving (HSC)
-                </option>
-                <option value="Problem solving (Medical admission)">
-                  Problem solving (Medical admission)
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="task-duration">Duration (hours)</label>
-              <input
-                type="number"
-                id="task-duration"
-                min="0.1"
-                max="4.5"
-                step="0.1"
-                value="1"
-              />
-            </div>
-            <div class="form-group">
-              <label for="task-day">Day</label>
-              <select id="task-day">
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="task-week">Week</label>
-              <input type="number" id="task-week" min="1" value="1" />
-            </div>
-            <div class="modal-buttons">
-              <button type="submit" class="btn btn-primary">Add Task</button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                onclick="closeModal()"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+      <div class="bg-blue-100 p-4 rounded-lg">
+        <h2 class="text-xl font-semibold text-blue-700">How to Use</h2>
+        <ol class="list-decimal list-inside text-gray-600">
+          <li>Add tasks using the form below.</li>
+          <li>Mark tasks as 'Done' to track progress.</li>
+          <li>Check the Progress Tracker for hours completed.</li>
+          <li>Review weekly to stay on track.</li>
+        </ol>
       </div>
     </div>
 
-    <script>
-      // Subject configurations
-      const subjects = {
-        Physics: { chapters: 20, totalHours: 500, icon: "P" },
-        Chemistry: { chapters: 10, totalHours: 250, icon: "C" },
-        Biology: { chapters: 24, totalHours: 480, icon: "B" },
-        Mathematics: { chapters: 15, totalHours: 300, icon: "M" }, // Assumed 300 hrs
-        Bangla: { chapters: 20, totalHours: 100, icon: "বা" },
-        English: { weeks: 52, totalHours: 52, icon: "E" }, // 1 hr/week for 52 weeks
-        ICT: { chapters: 5, totalHours: 50, icon: "I" },
+    <!-- Study Methods -->
+    <div class="bg-blue-50 p-4 rounded-lg mb-6">
+      <h2 class="text-xl font-semibold text-blue-700">Study Methods</h2>
+      <p class="text-gray-600">Follow these methods for each subject:</p>
+      <ul class="list-disc list-inside text-gray-600">
+        <li><span class="font-bold text-blue-600">Biology, Physics, Chemistry:</span> Watch video, read books, take notes, solve type-wise questions, read medical guide</li>
+        <li><span class="font-bold text-blue-600">Higher Maths:</span> Watch video, solve problems, take subject-ending notes</li>
+        <li><span class="font-bold text-blue-600">Bangla:</span> Read book, watch video, solve questions</li>
+        <li><span class="font-bold text-blue-600">English:</span> Read book, practice test papers, solve questions</li>
+        <li><span class="font-bold text-blue-600">ICT:</span> Watch video, read main book, read guide book, practice</li>
+        <li><span class="font-bold text-blue-600">GK & Others:</span> Read books, watch videos</li>
+      </ul>
+    </div>
+
+    <!-- Task Input Form -->
+    <div class="bg-blue-100 p-4 rounded-lg mb-6">
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">Add New Task</h2>
+      <div class="grid grid-cols-1 gap-4">
+        <input id="taskName" type="text" placeholder="Task Name (e.g., Watch Biology Video)" class="p-2 border rounded w-full">
+        <select id="subject" class="p-2 border rounded w-full">
+          <option value="Biology">Biology</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Higher Maths">Higher Maths</option>
+          <option value="Bangla">Bangla</option>
+          <option value="English">English</option>
+          <option value="ICT">ICT</option>
+          <option value="GK & Others">GK & Others</option>
+        </select>
+        <select id="taskType" class="p-2 border rounded w-full">
+          <option value="Watch Video">Watch Video</option>
+          <option value="Read Book">Read Book</option>
+          <option value="Take Notes">Take Notes</option>
+          <option value="Solve Questions">Solve Questions</option>
+          <option value="Practice Test">Practice Test</option>
+          <option value="Read Guide">Read Guide</option>
+          <option value="Subject-Ending Notes">Subject-Ending Notes</option>
+          <option value="Practice">Practice</option>
+        </select>
+        <input id="duration" type="number" step="0.1" min="0" placeholder="Duration (hours)" class="p-2 border rounded w-full">
+        <input id="date" type="date" class="p-2 border rounded w-full">
+        <select id="status" class="p-2 border rounded w-full">
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+        <textarea id="notes" placeholder="Notes (e.g., Chapter 1, YouTube link)" class="p-2 border rounded w-full"></textarea>
+        <button onclick="addTask()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Add Task</button>
+      </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="bg-white p-4 rounded-lg mb-6">
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">Task List</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-blue-100">
+            <th class="p-2 border">Task Name</th>
+            <th class="p-2 border">Subject</th>
+            <th class="p-2 border">Task Type</th>
+            <th class="p-2 border">Duration (h)</th>
+            <th class="p-2 border">Date</th>
+            <th class="p-2 border">Status</th>
+            <th class="p-2 border">Notes</th>
+            <th class="p-2 border">Action</th>
+          </tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+      </table>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="bg-blue-50 p-4 rounded-lg">
+      <h2 class="text-xl font-semibold text-blue-700 mb-4">Progress Tracker</h2>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-blue-100">
+            <th class="p-2 border">Subject</th>
+            <th class="p-2 border">Target Hours</th>
+            <th class="p-2 border">Hours Completed</th>
+            <th class="p-2 border">Progress (%)</th>
+          </tr>
+        </thead>
+        <tbody id="progressTable">
+          <tr><td class="p-2 border">Biology</td><td class="p-2 border">575</td><td id="progress-Biology" class="p-2 border">0</td><td id="percent-Biology" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">Physics</td><td class="p-2 border">460</td><td id="progress-Physics" class="p-2 border">0</td><td id="percent-Physics" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">Chemistry</td><td class="p-2 border">460</td><td id="progress-Chemistry" class="p-2 border">0</td><td id="percent-Chemistry" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">Higher Maths</td><td class="p-2 border">345</td><td id="progress-Higher Maths" class="p-2 border">0</td><td id="percent-Higher Maths" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">Bangla</td><td class="p-2 border">184</td><td id="progress-Bangla" class="p-2 border">0</td><td id="percent-Bangla" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">English</td><td class="p-2 border">184</td><td id="progress-English" class="p-2 border">0</td><td id="percent-English" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">ICT</td><td class="p-2 border">92</td><td id="progress-ICT" class="p-2 border">0</td><td id="percent-ICT" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">GK & Others</td><td class="p-2 border">92</td><td id="progress-GK & Others" class="p-2 border">0</td><td id="percent-GK & Others" class="p-2 border">0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Load tasks from localStorage
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    renderTasks();
+    updateProgress();
+
+    function addTask() {
+      const task = {
+        name: document.getElementById('taskName').value,
+        subject: document.getElementById('subject').value,
+        taskType: document.getElementById('taskType').value,
+        duration: parseFloat(document.getElementById('duration').value) || 0,
+        date: document.getElementById('date').value,
+        status: document.getElementById('status').value,
+        notes: document.getElementById('notes').value
       };
-
-      const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ];
-      let tasks = JSON.parse(localStorage.getItem("hsc_tasks")) || [];
-      let completedTasks =
-        JSON.parse(localStorage.getItem("hsc_completed_tasks")) || [];
-      let currentWeek = parseInt(localStorage.getItem("hsc_current_week")) || 1;
-
-      // Initialize week selector
-      function initWeekSelector() {
-        const weekSelect = document.getElementById("week-select");
-        const weeks = [...new Set(tasks.map((task) => task.week))].sort(
-          (a, b) => a - b
-        );
-        if (!weeks.includes(currentWeek)) weeks.push(currentWeek);
-        weekSelect.innerHTML = weeks
-          .map(
-            (week) =>
-              `<option value="${week}" ${
-                week === currentWeek ? "selected" : ""
-              }>Week ${week}</option>`
-          )
-          .join("");
-      }
-
-      // Update weekly planner
-      function updateWeeklyPlanner() {
-        const planner = document.getElementById("weekly-planner");
-        currentWeek = parseInt(document.getElementById("week-select").value);
-        localStorage.setItem("hsc_current_week", currentWeek);
-        planner.innerHTML = days
-          .map((day) => {
-            const isHeavyDay = !["Saturday", "Sunday"].includes(day);
-            const dayTasks = tasks.filter(
-              (task) => task.week === currentWeek && task.day === day
-            );
-            const dayHours = dayTasks.reduce(
-              (sum, task) => sum + parseFloat(task.duration),
-              0
-            );
-            return `
-                  <div class="day-card ${
-                    isHeavyDay ? "heavy-day-card" : "light-day-card"
-                  }">
-                      <div class="day-header">${day} (${
-              isHeavyDay ? "Heavy" : "Light"
-            })</div>
-                      ${
-                        dayTasks.length
-                          ? dayTasks
-                              .map(
-                                (task) => `
-                          <div class="task-item ${
-                            completedTasks.some((ct) => ct.id === task.id)
-                              ? "completed"
-                              : ""
-                          }">
-                              <input type="checkbox" class="checkbox" ${
-                                completedTasks.some((ct) => ct.id === task.id)
-                                  ? "checked"
-                                  : ""
-                              } onchange="toggleTask(${task.id}, this)">
-                              <span class="task-text ${
-                                completedTasks.some((ct) => ct.id === task.id)
-                                  ? "completed"
-                                  : ""
-                              }">
-                                  ${task.subject}: ${
-                                  task.taskType
-                                } - ${parseFloat(task.duration).toFixed(1)}hr
-                              </span>
-                          </div>
-                      `
-                              )
-                              .join("")
-                          : '<p style="color: #666; font-style: italic;">No tasks added</p>'
-                      }
-                      <button class="add-task-btn" onclick="openModal('${day}', ${currentWeek})">+ Add Task</button>
-                  </div>
-              `;
-          })
-          .join("");
+      if (task.name && task.subject && task.duration > 0 && task.date) {
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        renderTasks();
         updateProgress();
+        clearForm();
+      } else {
+        alert('Please fill in all required fields (Task Name, Subject, Duration, Date).');
       }
+    }
 
-      // Open task modal
-      function openModal(day, week) {
-        const modal = document.getElementById("task-modal");
-        document.getElementById("task-day").value = day;
-        document.getElementById("task-week").value = week;
-        document.getElementById("modal-alert").style.display = "none";
-        modal.style.display = "flex";
-      }
-
-      // Close task modal
-      function closeModal() {
-        document.getElementById("task-modal").style.display = "none";
-        document.getElementById("task-form").reset();
-        document.getElementById("task-week").value = currentWeek;
-      }
-
-      // Add task
-      document
-        .getElementById("task-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const subject = document.getElementById("task-subject").value;
-          const taskType = document.getElementById("task-type").value;
-          const duration = parseFloat(
-            document.getElementById("task-duration").value
-          );
-          const day = document.getElementById("task-day").value;
-          const week = parseInt(document.getElementById("task-week").value);
-
-          if (isNaN(duration) || duration < 0.1 || duration > 4.5) {
-            showAlert("Duration must be between 0.1 and 4.5 hours.");
-            return;
-          }
-
-          const dayTasks = tasks.filter(
-            (task) => task.week === week && task.day === day
-          );
-          const dayHours = dayTasks.reduce(
-            (sum, task) => sum + parseFloat(task.duration),
-            0
-          );
-          if (dayHours + duration > 4.5) {
-            showAlert(
-              `Cannot add task. ${day} would exceed 4.5 hours (current: ${dayHours.toFixed(
-                1
-              )} hrs).`
-            );
-            return;
-          }
-
-          const task = {
-            id: Date.now(),
-            subject,
-            taskType,
-            duration: duration.toString(),
-            day,
-            week,
-          };
-          tasks.push(task);
-          localStorage.setItem("hsc_tasks", JSON.stringify(tasks));
-          closeModal();
-          updateWeeklyPlanner();
-        });
-
-      // Show alert in modal
-      function showAlert(message) {
-        const alert = document.getElementById("modal-alert");
-        alert.textContent = message;
-        alert.style.display = "block";
-        setTimeout(() => {
-          alert.style.display = "none";
-        }, 5000);
-      }
-
-      // Toggle task completion
-      function toggleTask(taskId, checkbox) {
-        const task = tasks.find((t) => t.id === taskId);
-        if (!task) return;
-        if (checkbox.checked) {
-          completedTasks.push(task);
-          checkbox.parentElement.style.transform = "scale(1.05)";
-          setTimeout(() => {
-            checkbox.parentElement.style.transform = "scale(1)";
-          }, 200);
-        } else {
-          completedTasks = completedTasks.filter((ct) => ct.id !== taskId);
-        }
-        localStorage.setItem(
-          "hsc_completed_tasks",
-          JSON.stringify(completedTasks)
-        );
-        updateWeeklyPlanner();
-      }
-
-      // Update progress
-      function updateProgress() {
-        // Subject progress
-        const subjectGrid = document.getElementById("subject-grid");
-        subjectGrid.innerHTML = Object.entries(subjects)
-          .map(([subject, data]) => {
-            const subjectTasks = completedTasks.filter(
-              (task) => task.subject === subject
-            );
-            const hoursCompleted = subjectTasks.reduce(
-              (sum, task) => sum + parseFloat(task.duration),
-              0
-            );
-            let percentage, progressText, chaptersCompleted;
-            if (subject === "English") {
-              const weeksCompleted = [
-                ...new Set(subjectTasks.map((task) => task.week)),
-              ].filter((week) => {
-                const weekHours = subjectTasks
-                  .filter((task) => task.week === week)
-                  .reduce((sum, task) => sum + parseFloat(task.duration), 0);
-                return weekHours >= 1;
-              }).length;
-              percentage = (weeksCompleted / data.weeks) * 100;
-              progressText = `${weeksCompleted}/${data.weeks} weeks`;
-              chaptersCompleted = weeksCompleted;
-            } else {
-              percentage =
-                data.totalHours > 0
-                  ? (hoursCompleted / data.totalHours) * 100
-                  : 0;
-              progressText = `${hoursCompleted.toFixed(1)}/${
-                data.totalHours
-              } hrs`;
-              chaptersCompleted = Math.floor(
-                hoursCompleted / (data.totalHours / data.chapters)
-              );
-            }
-            return `
-                  <div class="subject-card">
-                      <div class="subject-title">
-                          <div class="subject-icon">${data.icon}</div>
-                          ${subject}
-                      </div>
-                      <p><strong>${
-                        subject === "English" ? "Weeks" : "Chapters"
-                      }: </strong>${
-              subject === "English" ? data.weeks : data.chapters
-            } | <strong>Total Hours:</strong> ${data.totalHours}</p>
-                      <div class="progress-bar">
-                          <div class="progress-fill" style="width: ${percentage}%">${percentage.toFixed(
-              1
-            )}%</div>
-                      </div>
-                      <p style="margin-top: 10px; color: #666;">Completed: ${chaptersCompleted}/${
-              subject === "English" ? data.weeks : data.chapters
-            } ${subject === "English" ? "weeks" : "chapters"}</p>
-                  </div>
-              `;
-          })
-          .join("");
-
-        // Overall progress
-        const totalHours = 1380 + 52; // Including English
-        const totalCompleted = completedTasks.reduce(
-          (sum, task) => sum + parseFloat(task.duration),
-          0
-        );
-        const overallPercentage = (totalCompleted / totalHours) * 100;
-        const totalChapters = Object.values(subjects).reduce(
-          (sum, s) => sum + (s.chapters || 0),
-          52
-        ); // English weeks as chapters
-        const chaptersCompleted = Object.entries(subjects).reduce(
-          (sum, [subject, data]) => {
-            if (subject === "English") {
-              const weeksCompleted = [
-                ...new Set(
-                  completedTasks
-                    .filter((task) => task.subject === "English")
-                    .map((task) => task.week)
-                ),
-              ].filter((week) => {
-                return (
-                  completedTasks
-                    .filter(
-                      (task) => task.subject === "English" && task.week === week
-                    )
-                    .reduce((s, t) => s + parseFloat(t.duration), 0) >= 1
-                );
-              }).length;
-              return sum + weeksCompleted;
-            }
-            const hours = completedTasks
-              .filter((task) => task.subject === subject)
-              .reduce((s, t) => s + parseFloat(t.duration), 0);
-            return sum + Math.floor(hours / (data.totalHours / data.chapters));
-          },
-          0
-        );
-        const hoursRemaining = (totalHours - totalCompleted).toFixed(1);
-        const weeksRemaining = hoursRemaining / (4.5 * 5 + 2 * 2); // 5 heavy days (4.5h) + 2 light days (2h avg)
-
-        document.getElementById(
-          "circular-progress"
-        ).style.background = `conic-gradient(#1E90FF ${
-          overallPercentage * 3.6
-        }deg, #87CEEB 0deg)`;
-        document.getElementById(
-          "progress-text"
-        ).textContent = `${overallPercentage.toFixed(1)}%`;
-        document.getElementById(
-          "progress-details"
-        ).textContent = `${totalCompleted.toFixed(
-          1
-        )} hours completed out of ${totalHours} total hours`;
-
-        document.getElementById("stats-grid").innerHTML = `
-              <div class="stat-card">
-                  <div class="stat-number">${chaptersCompleted}</div>
-                  <div class="stat-label">Chapters Completed</div>
-              </div>
-              <div class="stat-card">
-                  <div class="stat-number">${totalCompleted.toFixed(1)}</div>
-                  <div class="stat-label">Hours Studied</div>
-              </div>
-              <div class="stat-card">
-                  <div class="stat-number">${hoursRemaining}</div>
-                  <div class="stat-label">Hours Remaining</div>
-              </div>
-              <div class="stat-card">
-                  <div class="stat-number">${Math.ceil(weeksRemaining)}</div>
-                  <div class="stat-label">Weeks Remaining</div>
-              </div>
-          `;
-      }
-
-      // Initialize app
-      document.addEventListener("DOMContentLoaded", () => {
-        initWeekSelector();
-        updateWeeklyPlanner();
-        updateProgress();
+    function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+      tasks.forEach((task, index) => {
+        const row = document.createElement('tr');
+        row.className = {
+          'Biology': 'bg-blue-50', 'Physics': 'bg-blue-100', 'Chemistry': 'bg-blue-200',
+          'Higher Maths': 'bg-blue-300', 'Bangla': 'bg-blue-400', 'English': 'bg-blue-500',
+          'ICT': 'bg-blue-600', 'GK & Others': 'bg-blue-700'
+        }[task.subject] || '';
+        row.innerHTML = `
+          <td class="p-2 border">${task.name}</td>
+          <td class="p-2 border">${task.subject}</td>
+          <td class="p-2 border">${task.taskType}</td>
+          <td class="p-2 border">${task.duration}</td>
+          <td class="p-2 border">${task.date}</td>
+          <td class="p-2 border">
+            <select onchange="updateStatus(${index}, this.value)" class="${task.status === 'Done' ? 'text-green-600' : task.status === 'In Progress' ? 'text-yellow-600' : 'text-red-600'}">
+              <option value="To Do" ${task.status === 'To Do' ? 'selected' : ''}>To Do</option>
+              <option value="In Progress" ${task.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Done" ${task.status === 'Done' ? 'selected' : ''}>Done</option>
+            </select>
+          </td>
+          <td class="p-2 border">${task.notes}</td>
+          <td class="p-2 border"><button onclick="deleteTask(${index})" class="text-red-600 hover:underline">Delete</button></td>
+        `;
+        taskList.appendChild(row);
       });
+    }
 
-      function showTab(tabName) {
-        document
-          .querySelectorAll(".tab-content")
-          .forEach((tab) => tab.classList.remove("active"));
-        document
-          .querySelectorAll(".nav-tab")
-          .forEach((tab) => tab.classList.remove("active"));
-        document.getElementById(tabName).classList.add("active");
-        event.target.classList.add("active");
+    function updateStatus(index, status) {
+      tasks[index].status = status;
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      updateProgress();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const targets = {
+        'Biology': 575, 'Physics': 460, 'Chemistry': 460, 'Higher Maths': 345,
+        'Bangla': 184, 'English': 184, 'ICT': 92, 'GK & Others': 92
+      };
+      const completed = tasks.reduce((acc, task) => {
+        if (task.status === 'Done') {
+          acc[task.subject] = (acc[task.subject] || 0) + task.duration;
+        }
+        return acc;
+      }, {});
+      for (const subject in targets) {
+        const hours = completed[subject] || 0;
+        document.getElementById(`progress-${subject}`).textContent = hours;
+        document.getElementById(`percent-${subject}`).textContent = ((hours / targets[subject]) * 100).toFixed(1) + '%';
       }
-    </script>
-  </body>
-</html>
+    }
 
+    function clearForm() {
+      document.getElementById('taskName').value = '';
+      document.getElementById('subject').value = 'Biology';
+      document.getElementById('taskType').value = 'Watch Video';
+      document.getElementById('duration').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('status').value = 'To Do';
+      document.getElementById('notes').value = '';
+    }
+  </script>
+</body>
+</html>
