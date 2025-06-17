@@ -9,19 +9,44 @@
     body {
       background: linear-gradient(to right, #e0f2fe, #bae6fd, #7dd3fc);
     }
+    /* Sticky table headers */
+    th {
+      position: sticky;
+      top: 0;
+      background: inherit;
+      z-index: 10;
+    }
+    /* Scrollable table on mobile */
+    @media (max-width: 640px) {
+      .task-table-container {
+        overflow-x: auto;
+      }
+    }
+    /* Progress bar styling */
+    .progress-bar {
+      height: 10px;
+      background-color: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #3b82f6;
+      transition: width 0.3s ease-in-out;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
-  <div class="bg-white rounded-lg shadow-xl p-6 max-w-4xl w-full">
-    <h1 class="text-3xl font-bold text-center text-blue-700 mb-4">HSC & Medical Admission Study Planner</h1>
-    <p class="text-lg text-gray-700 mb-6 text-center">Plan your 2300-hour study journey from June 2025 to January 2027!</p>
+<body class="min-h-screen flex flex-col items-center p-2 sm:p-4">
+  <div class="bg-white rounded-lg shadow-xl p-4 sm:p-6 max-w-4xl w-full">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-blue-700 mb-4">HSC & Medical Admission Study Planner</h1>
+    <p class="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 text-center">Plan your 2300-hour study journey from June 2025 to January 2027!</p>
 
     <!-- Study Goals and Instructions -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-      <div class="bg-blue-50 p-4 rounded-lg">
-        <h2 class="text-xl font-semibold text-blue-700">Study Goals</h2>
-        <p class="text-gray-600">Total: 2300 hours</p>
-        <ul class="list-disc list-inside text-gray-600">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+      <div class="bg-blue-50 p-3 sm:p-4 rounded-lg">
+        <h2 class="text-lg sm:text-xl font-semibold text-blue-700">Study Goals</h2>
+        <p class="text-gray-600 text-sm sm:text-base">Total: 2300 hours</p>
+        <ul class="list-disc list-inside text-gray-600 text-sm sm:text-base">
           <li>Biology: 575h (25%)</li>
           <li>Physics: 460h (20%)</li>
           <li>Chemistry: 460h (20%)</li>
@@ -32,9 +57,9 @@
           <li>GK & Others: 92h (4%)</li>
         </ul>
       </div>
-      <div class="bg-blue-100 p-4 rounded-lg">
-        <h2 class="text-xl font-semibold text-blue-700">How to Use</h2>
-        <ol class="list-decimal list-inside text-gray-600">
+      <div class="bg-blue-100 p-3 sm:p-4 rounded-lg">
+        <h2 class="text-lg sm:text-xl font-semibold text-blue-700">How to Use</h2>
+        <ol class="list-decimal list-inside text-gray-600 text-sm sm:text-base">
           <li>Add tasks using the form below.</li>
           <li>Mark tasks as 'Done' to track progress.</li>
           <li>Check the Progress Tracker for hours completed.</li>
@@ -44,10 +69,89 @@
     </div>
 
     <!-- Study Methods -->
-    <div class="bg-blue-50 p-4 rounded-lg mb-6">
-      <h2 class="text-xl font-semibold text-blue-700">Study Methods</h2>
-      <p class="text-gray-600">Follow these methods for each subject:</p>
-      <ul class="list-disc list-inside text-gray-600">
+    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
+      <h2 class="text-lg sm:text-xl font-semibold text-blue-700">.
+
+<xaiArtifact artifact_id="f6e697c4-a177-4034-8d78-0849f61891d9" artifact_version_id="fea81eec-71c4-4552-8ea3-c325e040609d" title="index.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSC & Medical Admission Study Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #e0f2fe, #bae6fd, #7dd3fc);
+    }
+    /* Sticky table headers */
+    th {
+      position: sticky;
+      top: 0;
+      background: inherit;
+      z-index: 10;
+    }
+    /* Scrollable table on mobile */
+    @media (max-width: 640px) {
+      .task-table-container {
+        overflow-x: auto;
+      }
+    }
+    /* Progress bar styling */
+    .progress-bar {
+      height: 10px;
+      background-color: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #3b82f6;
+      transition: width 0.3s ease-in-out;
+    }
+    /* Invalid input styling */
+    .invalid {
+      border-color: #ef4444;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-2 sm:p-4">
+  <div class="bg-white rounded-lg shadow-xl p-4 sm:p-6 max-w-4xl w-full">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center text-blue-700 mb-4">HSC & Medical Admission Study Planner</h1>
+    <p class="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6 text-center">Plan your 2300-hour study journey from June 2025 to January 2027!</p>
+
+    <!-- Study Goals and Instructions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+      <div class="bg-blue-50 p-3 sm:p-4 rounded-lg">
+        <h2 class="text-lg sm:text-xl font-semibold text-blue-700">Study Goals</h2>
+        <p class="text-gray-600 text-sm sm:text-base">Total: 2300 hours</p>
+        <ul class="list-disc list-inside text-gray-600 text-sm sm:text-base">
+          <li>Biology: 575h (25%)</li>
+          <li>Physics: 460h (20%)</li>
+          <li>Chemistry: 460h (20%)</li>
+          <li>Higher Maths: 345h (15%)</li>
+          <li>Bangla: 184h (8%)</li>
+          <li>English: 184h (8%)</li>
+          <li>ICT: 92h (4%)</li>
+          <li>GK & Others: 92h (4%)</li>
+        </ul>
+      </div>
+      <div class="bg-blue-100 p-3 sm:p-4 rounded-lg">
+        <h2 class="text-lg sm:text-xl font-semibold text-blue-700">How to Use</h2>
+        <ol class="list-decimal list-inside text-gray-600 text-sm sm:text-base">
+          <li>Add tasks using the form below.</li>
+          <li>Mark tasks as 'Done' to track progress.</li>
+          <li>Check the Progress Tracker for hours completed.</li>
+          <li>Review weekly to stay on track.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Study Methods -->
+    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
+      <h2 class="text-lg sm:text-xl font-semibold text-blue-700">Study Methods</h2>
+      <p class="text-gray-600 text-sm sm:text-base">Follow these methods for each subject:</p>
+      <ul class="list-disc list-inside text-gray-600 text-sm sm:text-base">
         <li><span class="font-bold text-blue-600">Biology, Physics, Chemistry:</span> Watch video, read books, take notes, solve type-wise questions, read medical guide</li>
         <li><span class="font-bold text-blue-600">Higher Maths:</span> Watch video, solve problems, take subject-ending notes</li>
         <li><span class="font-bold text-blue-600">Bangla:</span> Read book, watch video, solve questions</li>
@@ -58,11 +162,11 @@
     </div>
 
     <!-- Task Input Form -->
-    <div class="bg-blue-100 p-4 rounded-lg mb-6">
-      <h2 class="text-xl font-semibold text-blue-700 mb-4">Add New Task</h2>
-      <div class="grid grid-cols-1 gap-4">
-        <input id="taskName" type="text" placeholder="Task Name (e.g., Watch Biology Video)" class="p-2 border rounded w-full">
-        <select id="subject" class="p-2 border rounded w-full">
+    <div class="bg-blue-100 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
+      <h2 class="text-lg sm:text-xl font-semibold text-blue-700 mb-3 sm:mb-4">Add New Task</h2>
+      <div class="grid grid-cols-1 gap-3 sm:gap-4">
+        <input id="taskName" type="text" placeholder="Task Name (e.g., Watch Biology Video)" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+        <select id="subject" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
           <option value="Biology">Biology</option>
           <option value="Physics">Physics</option>
           <option value="Chemistry">Chemistry</option>
@@ -72,7 +176,7 @@
           <option value="ICT">ICT</option>
           <option value="GK & Others">GK & Others</option>
         </select>
-        <select id="taskType" class="p-2 border rounded w-full">
+        <select id="taskType" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
           <option value="Watch Video">Watch Video</option>
           <option value="Read Book">Read Book</option>
           <option value="Take Notes">Take Notes</option>
@@ -82,59 +186,68 @@
           <option value="Subject-Ending Notes">Subject-Ending Notes</option>
           <option value="Practice">Practice</option>
         </select>
-        <input id="duration" type="number" step="0.1" min="0" placeholder="Duration (hours)" class="p-2 border rounded w-full">
-        <input id="date" type="date" class="p-2 border rounded w-full">
-        <select id="status" class="p-2 border rounded w-full">
+        <input id="duration" type="number" step="0.1" min="0" placeholder="Duration (hours)" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+        <input id="date" type="date" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
+        <select id="status" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
           <option value="To Do">To Do</option>
           <option value="In Progress">In Progress</option>
           <option value="Done">Done</option>
         </select>
-        <textarea id="notes" placeholder="Notes (e.g., Chapter 1, YouTube link)" class="p-2 border rounded w-full"></textarea>
-        <button onclick="addTask()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Add Task</button>
+        <textarea id="notes" placeholder="Notes (e.g., Chapter 1, YouTube link)" class="p-2 border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300"></textarea>
+        <button onclick="addTask()" class="bg-blue-600 text-white p-3 sm:p-2 rounded hover:bg-blue-700 text-sm sm:text-base">Add Task</button>
       </div>
     </div>
 
     <!-- Task List -->
-    <div class="bg-white p-4 rounded-lg mb-6">
-      <h2 class="text-xl font-semibold text-blue-700 mb-4">Task List</h2>
-      <table class="w-full border-collapse">
-        <thead>
-          <tr class="bg-blue-100">
-            <th class="p-2 border">Task Name</th>
-            <th class="p-2 border">Subject</th>
-            <th class="p-2 border">Task Type</th>
-            <th class="p-2 border">Duration (h)</th>
-            <th class="p-2 border">Date</th>
-            <th class="p-2 border">Status</th>
-            <th class="p-2 border">Notes</th>
-            <th class="p-2 border">Action</th>
-          </tr>
-        </thead>
-        <tbody id="taskList"></tbody>
-      </table>
+    <div class="bg-white p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
+      <div class="flex justify-between items-center mb-3 sm:mb-4">
+        <h2 class="text-lg sm:text-xl font-semibold text-blue-700">Task List</h2>
+        <div class="flex space-x-2">
+          <button onclick="sortTasks('date')" class="bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-blue-700 text-sm">Sort by Date</button>
+          <button onclick="sortTasks('subject')" class="bg-blue-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-blue-700 text-sm">Sort by Subject</button>
+          <button onclick="clearAllTasks()" class="bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-red-700 text-sm">Clear All Tasks</button>
+        </div>
+      </div>
+      <div class="task-table-container">
+        <table class="w-full border-collapse text-sm sm:text-base">
+          <thead>
+            <tr class="bg-blue-100">
+              <th class="p-2 border">Task Name</th>
+              <th class="p-2 border">Subject</th>
+              <th class="p-2 border">Task Type</th>
+              <th class="p-2 border">Duration (h)</th>
+              <th class="p-2 border">Date</th>
+              <th class="p-2 border">Status</th>
+              <th class="p-2 border">Notes</th>
+              <th class="p-2 border">Action</th>
+            </tr>
+          </thead>
+          <tbody id="taskList"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Progress Tracker -->
-    <div class="bg-blue-50 p-4 rounded-lg">
-      <h2 class="text-xl font-semibold text-blue-700 mb-4">Progress Tracker</h2>
-      <table class="w-full border-collapse">
+    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg">
+      <h2 class="text-lg sm:text-xl font-semibold text-blue-700 mb-3 sm:mb-4">Progress Tracker</h2>
+      <table class="w-full border-collapse text-sm sm:text-base">
         <thead>
           <tr class="bg-blue-100">
             <th class="p-2 border">Subject</th>
             <th class="p-2 border">Target Hours</th>
             <th class="p-2 border">Hours Completed</th>
-            <th class="p-2 border">Progress (%)</th>
+            <th class="p-2 border">Progress</th>
           </tr>
         </thead>
         <tbody id="progressTable">
-          <tr><td class="p-2 border">Biology</td><td class="p-2 border">575</td><td id="progress-Biology" class="p-2 border">0</td><td id="percent-Biology" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">Physics</td><td class="p-2 border">460</td><td id="progress-Physics" class="p-2 border">0</td><td id="percent-Physics" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">Chemistry</td><td class="p-2 border">460</td><td id="progress-Chemistry" class="p-2 border">0</td><td id="percent-Chemistry" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">Higher Maths</td><td class="p-2 border">345</td><td id="progress-Higher Maths" class="p-2 border">0</td><td id="percent-Higher Maths" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">Bangla</td><td class="p-2 border">184</td><td id="progress-Bangla" class="p-2 border">0</td><td id="percent-Bangla" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">English</td><td class="p-2 border">184</td><td id="progress-English" class="p-2 border">0</td><td id="percent-English" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">ICT</td><td class="p-2 border">92</td><td id="progress-ICT" class="p-2 border">0</td><td id="percent-ICT" class="p-2 border">0%</td></tr>
-          <tr><td class="p-2 border">GK & Others</td><td class="p-2 border">92</td><td id="progress-GK & Others" class="p-2 border">0</td><td id="percent-GK & Others" class="p-2 border">0%</td></tr>
+          <tr><td class="p-2 border">Biology</td><td class="p-2 border">575</td><td id="progress-Biology" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-Biology" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-Biology">0%</span></td></tr>
+          <tr><td class="p-2 border">Physics</td><td class="p-2 border">460</td><td id="progress-Physics" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-Physics" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-Physics">0%</span></td></tr>
+          <tr><td class="p-2 border">Chemistry</td><td class="p-2 border">460</td><td id="progress-Chemistry" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-Chemistry" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-Chemistry">0%</span></td></tr>
+          <tr><td class="p-2 border">Higher Maths</td><td class="p-2 border">345</td><td id="progress-Higher Maths" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-Higher Maths" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-Higher Maths">0%</span></td></tr>
+          <tr><td class="p-2 border">Bangla</td><td class="p-2 border">184</td><td id="progress-Bangla" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-Bangla" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-Bangla">0%</span></td></tr>
+          <tr><td class="p-2 border">English</td><td class="p-2 border">184</td><td id="progress-English" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-English" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-English">0%</span></td></tr>
+          <tr><td class="p-2 border">ICT</td><td class="p-2 border">92</td><td id="progress-ICT" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-ICT" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-ICT">0%</span></td></tr>
+          <tr><td class="p-2 border">GK & Others</td><td class="p-2 border">92</td><td id="progress-GK & Others" class="p-2 border">0</td><td class="p-2 border"><div class="progress-bar"><div id="progress-bar-GK & Others" class="progress-bar-fill" style="width: 0%"></div></div><span id="percent-GK & Others">0%</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -147,23 +260,47 @@
     updateProgress();
 
     function addTask() {
+      const taskNameInput = document.getElementById('taskName');
+      const durationInput = document.getElementById('duration');
+      const dateInput = document.getElementById('date');
+      
+      // Reset invalid styles
+      taskNameInput.classList.remove('invalid');
+      durationInput.classList.remove('invalid');
+      dateInput.classList.remove('invalid');
+
       const task = {
-        name: document.getElementById('taskName').value,
+        name: taskNameInput.value,
         subject: document.getElementById('subject').value,
         taskType: document.getElementById('taskType').value,
-        duration: parseFloat(document.getElementById('duration').value) || 0,
-        date: document.getElementById('date').value,
+        duration: parseFloat(durationInput.value) || 0,
+        date: dateInput.value,
         status: document.getElementById('status').value,
         notes: document.getElementById('notes').value
       };
-      if (task.name && task.subject && task.duration > 0 && task.date) {
+      
+      let isValid = true;
+      if (!task.name) {
+        taskNameInput.classList.add('invalid');
+        isValid = false;
+      }
+      if (task.duration <= 0) {
+        durationInput.classList.add('invalid');
+        isValid = false;
+      }
+      if (!task.date) {
+        dateInput.classList.add('invalid');
+        isValid = false;
+      }
+      
+      if (isValid) {
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
         renderTasks();
         updateProgress();
         clearForm();
       } else {
-        alert('Please fill in all required fields (Task Name, Subject, Duration, Date).');
+        alert('Please fill in all required fields (Task Name, Duration, Date).');
       }
     }
 
@@ -184,14 +321,14 @@
           <td class="p-2 border">${task.duration}</td>
           <td class="p-2 border">${task.date}</td>
           <td class="p-2 border">
-            <select onchange="updateStatus(${index}, this.value)" class="${task.status === 'Done' ? 'text-green-600' : task.status === 'In Progress' ? 'text-yellow-600' : 'text-red-600'}">
+            <select onchange="updateStatus(${index}, this.value)" class="${task.status === 'Done' ? 'text-green-600' : task.status === 'In Progress' ? 'text-yellow-600' : 'text-red-600'} p-1 sm:p-2">
               <option value="To Do" ${task.status === 'To Do' ? 'selected' : ''}>To Do</option>
               <option value="In Progress" ${task.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
               <option value="Done" ${task.status === 'Done' ? 'selected' : ''}>Done</option>
             </select>
           </td>
           <td class="p-2 border">${task.notes}</td>
-          <td class="p-2 border"><button onclick="deleteTask(${index})" class="text-red-600 hover:underline">Delete</button></td>
+          <td class="p-2 border"><button onclick="deleteTask(${index})" class="text-red-600 hover:underline text-sm sm:text-base">Delete</button></td>
         `;
         taskList.appendChild(row);
       });
@@ -210,6 +347,28 @@
       updateProgress();
     }
 
+    function clearAllTasks() {
+      if (confirm('Are you sure you want to delete all tasks?')) {
+        tasks = [];
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        renderTasks();
+        updateProgress();
+      }
+    }
+
+    function sortTasks(criteria) {
+      tasks.sort((a, b) => {
+        if (criteria === 'date') {
+          return new Date(a.date) - new Date(b.date);
+        } else if (criteria === 'subject') {
+          return a.subject.localeCompare(b.subject);
+        }
+        return 0;
+      });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+
     function updateProgress() {
       const targets = {
         'Biology': 575, 'Physics': 460, 'Chemistry': 460, 'Higher Maths': 345,
@@ -223,19 +382,29 @@
       }, {});
       for (const subject in targets) {
         const hours = completed[subject] || 0;
+        const percentage = ((hours / targets[subject]) * 100).toFixed(1);
         document.getElementById(`progress-${subject}`).textContent = hours;
-        document.getElementById(`percent-${subject}`).textContent = ((hours / targets[subject]) * 100).toFixed(1) + '%';
+        document.getElementById(`percent-${subject}`).textContent = `${percentage}%`;
+        document.getElementById(`progress-bar-${subject}`).style.width = `${percentage}%`;
       }
     }
 
     function clearForm() {
-      document.getElementById('taskName').value = '';
+      const taskNameInput = document.getElementById('taskName');
+      const durationInput = document.getElementById('duration');
+      const dateInput = document.getElementById('date');
+      
+      taskNameInput.value = '';
       document.getElementById('subject').value = 'Biology';
       document.getElementById('taskType').value = 'Watch Video';
-      document.getElementById('duration').value = '';
-      document.getElementById('date').value = '';
+      durationInput.value = '';
+      dateInput.value = '';
       document.getElementById('status').value = 'To Do';
       document.getElementById('notes').value = '';
+      
+      taskNameInput.classList.remove('invalid');
+      durationInput.classList.remove('invalid');
+      dateInput.classList.remove('invalid');
     }
   </script>
 </body>
