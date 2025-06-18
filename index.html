@@ -19,6 +19,12 @@
       color: #1f2937;
       position: relative;
       overflow-x: hidden;
+      transition: background 0.3s ease;
+    }
+
+    body.dark-theme {
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 25%, #4a5568 50%, #718096 75%, #e2e8f0 100%);
+      color: #e2e8f0;
     }
 
     body::before {
@@ -44,7 +50,7 @@
       z-index: 1;
     }
 
-    .header {
+    header {
       text-align: center;
       margin-bottom: 3rem;
       animation: fadeInDown 0.8s ease-out;
@@ -63,9 +69,51 @@
 
     .subtitle {
       font-size: 1.5rem;
-      color: #FFFFFF;
+      color: #E5E7EB;
       font-weight: 700;
-      opacity: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-bar {
+      margin-bottom: 2rem;
+      padding: 0.75rem 1rem;
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .search-bar:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      background: #3b82f6;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: #2563eb;
     }
 
     .subject-card {
@@ -76,14 +124,19 @@
         0 10px 30px rgba(59, 130, 246, 0.1),
         0 1px 8px rgba(0, 0, 0, 0.05);
       border: 2px solid transparent;
-      background-clip: padding-box;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       animation: fadeInUp 0.6s ease-out forwards;
       opacity: 0;
       transform: translateY(20px);
+      will-change: opacity, transform;
     }
 
-    .subject-card:hover {
+    .dark-theme .subject-card {
+      background: rgba(45, 55, 72, 0.95);
+      color: #e2e8f0;
+    }
+
+    .subject-card:hover, .subject-card:focus-within {
       transform: translateY(-5px);
       box-shadow: 
         0 20px 40px rgba(59, 130, 246, 0.15),
@@ -101,6 +154,10 @@
       transition: all 0.2s ease;
       position: relative;
       overflow: hidden;
+    }
+
+    .subject-header:focus {
+      outline: 2px solid #3b82f6;
     }
 
     .subject-header::before {
@@ -122,16 +179,16 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: #1e3a8a;
-      position: relative;
-      z-index: 1;
+    }
+
+    .dark-theme .subject-name {
+      color: #bfdbfe;
     }
 
     .subject-info {
       display: flex;
       align-items: center;
       gap: 1rem;
-      position: relative;
-      z-index: 1;
     }
 
     .hours-display {
@@ -141,6 +198,26 @@
       padding: 0.5rem 1rem;
       border-radius: 25px;
       font-size: 0.9rem;
+    }
+
+    .dark-theme .hours-display {
+      color: #d1d5db;
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 4px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #3b82f6;
+      transition: width 0.3s ease;
     }
 
     .expand-icon {
@@ -173,6 +250,11 @@
       transition: all 0.3s ease;
     }
 
+    .dark-theme .chapter-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1));
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
     .chapter-card:hover {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.08));
       border-color: rgba(59, 130, 246, 0.2);
@@ -187,14 +269,26 @@
       transition: background-color 0.2s ease;
     }
 
+    .chapter-header:focus {
+      outline: 2px solid #3b82f6;
+    }
+
     .chapter-header:hover {
       background: rgba(255, 255, 255, 0.5);
+    }
+
+    .dark-theme .chapter-header:hover {
+      background: rgba(45, 55, 72, 0.5);
     }
 
     .chapter-name {
       font-size: 1.1rem;
       font-weight: 500;
       color: #1e40af;
+    }
+
+    .dark-theme .chapter-name {
+      color: #93c5fd;
     }
 
     .chapter-content {
@@ -221,6 +315,10 @@
       font-size: 0.9rem;
     }
 
+    .dark-theme .input-label {
+      color: #d1d5db;
+    }
+
     .hours-input {
       width: 100%;
       padding: 0.75rem 1rem;
@@ -232,10 +330,19 @@
       outline: none;
     }
 
+    .dark-theme .hours-input {
+      background: rgba(45, 55, 72, 0.8);
+      color: #e2e8f0;
+    }
+
     .hours-input:focus {
       border-color: #3b82f6;
       background: rgba(255, 255, 255, 0.95);
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .dark-theme .hours-input:focus {
+      background: rgba(45, 55, 72, 0.95);
     }
 
     .methods-title {
@@ -243,6 +350,10 @@
       margin-bottom: 1rem;
       color: #1e40af;
       font-size: 1rem;
+    }
+
+    .dark-theme .methods-title {
+      color: #93c5fd;
     }
 
     .method-item {
@@ -256,6 +367,10 @@
 
     .method-item:hover {
       background: rgba(255, 255, 255, 0.5);
+    }
+
+    .dark-theme .method-item:hover {
+      background: rgba(45, 55, 72, 0.5);
     }
 
     .method-checkbox {
@@ -274,6 +389,10 @@
       user-select: none;
     }
 
+    .dark-theme .method-label {
+      color: #d1d5db;
+    }
+
     .stats-bar {
       position: fixed;
       bottom: 2rem;
@@ -286,20 +405,30 @@
       backdrop-filter: blur(10px);
       min-width: 200px;
       z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dark-theme .stats-bar {
+      background: rgba(45, 55, 72, 0.95);
+      border-color: rgba(59, 130, 246, 0.3);
     }
 
     .stats-title {
       font-weight: 600;
       color: #1e3a8a;
       margin-bottom: 0.5rem;
-      text-align: center;
+    }
+
+    .dark-theme .stats-title {
+      color: #bfdbfe;
     }
 
     .total-hours {
       font-size: 1.5rem;
       font-weight: 700;
       color: #3b82f6;
-      text-align: center;
     }
 
     @keyframes fadeInDown {
@@ -349,11 +478,14 @@
         bottom: 1rem;
         right: 1rem;
         left: 1rem;
-        position: fixed;
+        padding: 0.75rem 1rem;
+      }
+
+      .subject-card {
+        animation-duration: 0.4s;
       }
     }
 
-    /* Animation delays for staggered effect */
     .subject-card:nth-child(2) { animation-delay: 0.1s; }
     .subject-card:nth-child(3) { animation-delay: 0.2s; }
     .subject-card:nth-child(4) { animation-delay: 0.3s; }
@@ -368,9 +500,17 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
+    <header class="header">
       <h1 class="title">✨ StudyCielo ✨</h1>
       <p class="subtitle">Neela's Study Tracker</p>
+    </header>
+
+    <input type="text" id="search-bar" class="search-bar" placeholder="Search subjects..." aria-label="Search subjects">
+
+    <div class="controls">
+      <button id="theme-toggle" class="control-btn">Toggle Theme</button>
+      <button id="reset-progress" class="control-btn">Reset Progress</button>
+      <button id="export-progress" class="control-btn">Export Progress</button>
     </div>
 
     <div id="subjects-container"></div>
@@ -392,7 +532,8 @@
       "Chemistry 1st Paper": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
       "Chemistry 2nd Paper": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
       "ICT": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
-      "Higher Maths": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`)
+      "Higher Maths 1st Paper": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`),
+      "Higher Maths 2nd Paper": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`)
     };
 
     const studyMethods = {
@@ -405,7 +546,8 @@
       "Chemistry 1st Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
       "Chemistry 2nd Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
       "ICT": ["Watch Video", "Read Main Book", "Read Guide Book", "Practice"],
-      "Higher Maths": ["Watch Video", "Solve Problems", "Take Subject-Ending Notes"]
+      "Higher Maths 1st Paper": ["Watch Video", "Solve Problems", "Take Subject-Ending Notes"],
+      "Higher Maths 2nd Paper": ["Watch Video", "Solve Problems", "Take Subject-Ending Notes"]
     };
 
     const maxHours = {
@@ -418,34 +560,43 @@
       "Chemistry 1st Paper": Infinity,
       "Chemistry 2nd Paper": Infinity,
       "ICT": Infinity,
-      "Higher Maths": Infinity
+      "Higher Maths 1st Paper": Infinity,
+      "Higher Maths 2nd Paper": Infinity
     };
 
-    // Initialize progress data
-    let progress = {};
+    let progress = JSON.parse(localStorage.getItem('studyProgress')) || {};
     Object.keys(subjects).forEach(subject => {
-      progress[subject] = subjects[subject].map(() => ({
-        methods: studyMethods[subject].map(() => false),
-        hours: 0
-      }));
+      if (!progress[subject]) {
+        progress[subject] = subjects[subject].map(() => ({
+          methods: studyMethods[subject].map(() => false),
+          hours: 0
+        }));
+      }
     });
 
     let expandedSubject = null;
     let expandedChapter = null;
 
+    function saveProgress() {
+      localStorage.setItem('studyProgress', JSON.stringify(progress));
+    }
+
     function toggleSubject(subject) {
       const subjectCard = document.getElementById(`subject-${subject.replace(/\s+/g, '-')}`);
+      const ariaExpanded = subjectCard.querySelector('.subject-header').getAttribute('aria-expanded') === 'true';
       
       if (expandedSubject === subject) {
         subjectCard.classList.remove('expanded');
+        subjectCard.querySelector('.subject-header').setAttribute('aria-expanded', 'false');
         expandedSubject = null;
       } else {
-        // Close previously expanded subject
         if (expandedSubject) {
           const prevCard = document.getElementById(`subject-${expandedSubject.replace(/\s+/g, '-')}`);
           prevCard.classList.remove('expanded');
+          prevCard.querySelector('.subject-header').setAttribute('aria-expanded', 'false');
         }
         subjectCard.classList.add('expanded');
+        subjectCard.querySelector('.subject-header').setAttribute('aria-expanded', 'true');
         expandedSubject = subject;
       }
       expandedChapter = null;
@@ -455,18 +606,23 @@
     function toggleChapter(subject, chapterIndex) {
       const chapterKey = `${subject}-${chapterIndex}`;
       const chapterCard = document.getElementById(`chapter-${subject.replace(/\s+/g, '-')}-${chapterIndex}`);
+      const ariaExpanded = chapterCard.querySelector('.chapter-header').getAttribute('aria-expanded') === 'true';
       
       if (expandedChapter === chapterKey) {
         chapterCard.classList.remove('chapter-expanded');
+        chapterCard.querySelector('.chapter-header').setAttribute('aria-expanded', 'false');
         expandedChapter = null;
       } else {
-        // Close previously expanded chapter
         if (expandedChapter) {
           const [prevSubject, prevIndex] = expandedChapter.split('-');
           const prevCard = document.getElementById(`chapter-${prevSubject.replace(/\s+/g, '-')}-${prevIndex}`);
-          if (prevCard) prevCard.classList.remove('chapter-expanded');
+          if (prevCard) {
+            prevCard.classList.remove('chapter-expanded');
+            prevCard.querySelector('.chapter-header').setAttribute('aria-expanded', 'false');
+          }
         }
         chapterCard.classList.add('chapter-expanded');
+        chapterCard.querySelector('.chapter-header').setAttribute('aria-expanded', 'true');
         expandedChapter = chapterKey;
       }
     }
@@ -475,25 +631,46 @@
       expandedChapter = null;
       document.querySelectorAll('.chapter-card').forEach(card => {
         card.classList.remove('chapter-expanded');
+        card.querySelector('.chapter-header').setAttribute('aria-expanded', 'false');
       });
     }
 
     function handleCheckboxChange(subject, chapterIndex, methodIndex) {
       progress[subject][chapterIndex].methods[methodIndex] = !progress[subject][chapterIndex].methods[methodIndex];
+      saveProgress();
     }
 
-    function handleHoursChange(subject, chapterIndex, hours) {
+    function handleHoursChange(subject, chapterIndex, hours, inputElement) {
       let parsedHours = parseFloat(hours) || 0;
+      if (parsedHours < 0) {
+        parsedHours = 0;
+        inputElement.value = 0;
+        alert('Hours cannot be negative.');
+      }
       const totalHours = progress[subject].reduce((sum, chapter, idx) =>
         idx === chapterIndex ? sum + parsedHours : sum + chapter.hours, 0);
       
       if (maxHours[subject] !== Infinity && totalHours > maxHours[subject]) {
         parsedHours = Math.max(0, maxHours[subject] - (totalHours - parsedHours));
+        inputElement.value = parsedHours;
+        alert(`Total hours for ${subject} cannot exceed ${maxHours[subject]}.`);
       }
       
       progress[subject][chapterIndex].hours = parsedHours;
+      saveProgress();
       updateSubjectHours(subject);
       updateTotalHours();
+    }
+
+    function getSubjectProgress(subject) {
+      if (maxHours[subject] !== Infinity) {
+        const totalHours = progress[subject].reduce((sum, chapter) => sum + chapter.hours, 0);
+        return (totalHours / maxHours[subject]) * 100;
+      } else {
+        const completedChapters = progress[subject].filter(chapter =>
+          chapter.hours > 0 || chapter.methods.some(m => m)).length;
+        return (completedChapters / subjects[subject].length) * 100;
+      }
     }
 
     function getTotalHours(subject) {
@@ -501,9 +678,12 @@
     }
 
     function updateSubjectHours(subject) {
-      const hoursDisplay = document.getElementById(`hours-${subject.replace(/\s+/g, '-')}`);
+      const subjectId = subject.replace(/\s+/g, '-');
+      const hoursDisplay = document.getElementById(`hours-${subjectId}`);
+      const progressFill = document.getElementById(`progress-${subjectId}`);
       const totalHours = getTotalHours(subject);
       hoursDisplay.textContent = `Hours: ${totalHours}${maxHours[subject] !== Infinity ? '/50' : ''}`;
+      progressFill.style.width = `${Math.min(getSubjectProgress(subject), 100)}%`;
     }
 
     function updateTotalHours() {
@@ -511,16 +691,57 @@
       document.getElementById('total-hours').textContent = totalHours.toFixed(1);
     }
 
+    function filterSubjects() {
+      const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+      document.querySelectorAll('.subject-card').forEach(card => {
+        const subjectName = card.querySelector('.subject-name').textContent.toLowerCase();
+        card.style.display = subjectName.includes(searchTerm) ? 'block' : 'none';
+      });
+    }
+
+    function resetProgress() {
+      if (confirm('Are you sure you want to reset all progress? This action cannot be undone.')) {
+        progress = {};
+        Object.keys(subjects).forEach(subject => {
+          progress[subject] = subjects[subject].map(() => ({
+            methods: studyMethods[subject].map(() => false),
+            hours: 0
+          }));
+        });
+        saveProgress();
+        initializeApp();
+      }
+    }
+
+    function exportProgress() {
+      const dataStr = JSON.stringify(progress, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'study-progress.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+    }
+
     function createSubjectHTML(subject) {
       const subjectId = subject.replace(/\s+/g, '-');
       return `
         <div class="subject-card" id="subject-${subjectId}">
-          <div class="subject-header" onclick="toggleSubject('${subject}')">
+          <div class="subject-header" data-subject="${subject}" role="button" aria-expanded="false" tabindex="0">
             <h2 class="subject-name">${subject}</h2>
             <div class="subject-info">
               <span class="hours-display" id="hours-${subjectId}">Hours: 0${maxHours[subject] !== Infinity ? '/50' : ''}</span>
-              <span class="expand-icon">▼</span>
+              <span class="expand-icon" aria-hidden="true">▼</span>
             </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-${subjectId}" style="width: 0%"></div>
           </div>
           <div class="chapters-container">
             ${subjects[subject].map((chapter, chapterIndex) => createChapterHTML(subject, chapter, chapterIndex)).join('')}
@@ -531,37 +752,41 @@
 
     function createChapterHTML(subject, chapter, chapterIndex) {
       const subjectId = subject.replace(/\s+/g, '-');
+      const methods = studyMethods[subject] || [];
       return `
         <div class="chapter-card" id="chapter-${subjectId}-${chapterIndex}">
-          <div class="chapter-header" onclick="toggleChapter('${subject}', ${chapterIndex})">
+          <div class="chapter-header" data-subject="${subject}" data-index="${chapterIndex}" role="button" aria-expanded="false" tabindex="0">
             <h3 class="chapter-name">${chapter}</h3>
-            <span class="expand-icon">▼</span>
+            <span class="expand-icon" aria-hidden="true">▼</span>
           </div>
           <div class="chapter-content">
             <div class="hours-input-container">
-              <label class="input-label">Study Hours:</label>
+              <label class="input-label" for="hours-${subjectId}-${chapterIndex}">Study Hours:</label>
               <input
                 type="number"
+                id="hours-${subjectId}-${chapterIndex}"
                 class="hours-input"
                 step="0.5"
                 min="0"
-                value="0"
-                onchange="handleHoursChange('${subject}', ${chapterIndex}, this.value)"
-                oninput="handleHoursChange('${subject}', ${chapterIndex}, this.value)"
+                value="${progress[subject][chapterIndex].hours}"
+                oninput="handleHoursChange('${subject}', ${chapterIndex}, this.value, this)"
+                aria-describedby="hours-error-${subjectId}-${chapterIndex}"
               />
+              <span id="hours-error-${subjectId}-${chapterIndex}" class="error" style="display: none;"></span>
             </div>
             <h4 class="methods-title">Study Methods:</h4>
-            ${studyMethods[subject].map((method, methodIndex) => `
+            ${methods.length > 0 ? methods.map((method, methodIndex) => `
               <div class="method-item">
                 <input
                   type="checkbox"
                   class="method-checkbox"
                   id="method-${subjectId}-${chapterIndex}-${methodIndex}"
+                  ${progress[subject][chapterIndex].methods[methodIndex] ? 'checked' : ''}
                   onchange="handleCheckboxChange('${subject}', ${chapterIndex}, ${methodIndex})"
                 />
                 <label class="method-label" for="method-${subjectId}-${chapterIndex}-${methodIndex}">${method}</label>
               </div>
-            `).join('')}
+            `).join('') : '<p>No study methods available for this subject.</p>'}
           </div>
         </div>
       `;
@@ -571,16 +796,47 @@
       const container = document.getElementById('subjects-container');
       container.innerHTML = Object.keys(subjects).map(subject => createSubjectHTML(subject)).join('');
       
-      // Trigger animations
-      setTimeout(() => {
+      document.querySelectorAll('.subject-header').forEach(header => {
+        header.addEventListener('click', () => toggleSubject(header.dataset.subject));
+        header.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleSubject(header.dataset.subject);
+          }
+        });
+      });
+
+      document.querySelectorAll('.chapter-header').forEach(header => {
+        header.addEventListener('click', () => toggleChapter(header.dataset.subject, header.dataset.index));
+        header.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleChapter(header.dataset.subject, header.dataset.index);
+          }
+        });
+      });
+
+      document.getElementById('search-bar').addEventListener('input', filterSubjects);
+      document.getElementById('reset-progress').addEventListener('click', resetProgress);
+      document.getElementById('export-progress').addEventListener('click', exportProgress);
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+      Object.keys(subjects).forEach(subject => updateSubjectHours(subject));
+      updateTotalHours();
+
+      requestAnimationFrame(() => {
         document.querySelectorAll('.subject-card').forEach(card => {
           card.style.opacity = '1';
           card.style.transform = 'translateY(0)';
         });
-      }, 100);
+      });
+
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
     }
 
-    // Initialize the app
     document.addEventListener('DOMContentLoaded', initializeApp);
   </script>
 </body>
