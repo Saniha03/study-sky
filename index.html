@@ -3,371 +3,585 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudySky</title>
-  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+  <title>Neela's Study Tracker - StudyCielo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #f3f4f6;
-      color: #111827;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .container {
-      background: linear-gradient(to right, #1E3A8A, #3B82F6);
-      color: white;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 25%, #0ea5e9 50%, #06b6d4 75%, #ffffff 100%);
       min-height: 100vh;
-      padding: 16px;
+      color: #1f2937;
+      position: relative;
+      overflow-x: hidden;
     }
-    .header {
-      position: sticky;
+
+    body::before {
+      content: '';
+      position: fixed;
       top: 0;
-      background-color: rgba(31, 41, 55, 0.8);
-      padding: 16px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6, #0ea5e9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color:  linear-gradient(135deg, #1e3a8a, #3b82f6, #0ea5e9);
+      font-weight: 700;
+      opacity: 1;
+    }
+
+    .subject-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      box-shadow: 
+        0 10px 30px rgba(59, 130, 246, 0.1),
+        0 1px 8px rgba(0, 0, 0, 0.05);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .subject-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 20px 40px rgba(59, 130, 246, 0.15),
+        0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .subject-header {
+      padding: 1.5rem 2rem;
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .header h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    .header button {
-      color: white;
-      font-weight: bold;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    .header button:hover {
-      text-decoration: underline;
-    }
-    .subject-title {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-top: 16px;
-    }
-    .total-hours {
-      margin-top: 8px;
-    }
-    .paper-section {
-      margin-top: 16px;
-    }
-    .paper-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-    .chapter-card {
-      background-color: white;
-      color: #111827;
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .chapter-title {
-      font-weight: 600;
-    }
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-    }
-    .hours-input {
-      width: 80px;
-      padding: 8px;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-      color: #111827;
-    }
-    .hours-section {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .menu-button {
-      display: block;
-    }
-    .menu-content {
-      background-color: #1f2937;
-      padding: 16px;
-    }
-    .reset-button {
-      background-color: #dc2626;
-      color: white;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-    }
-    .reset-button:hover {
-      background-color: #b91c1c;
-    }
-    .subject-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 16px;
-    }
-    .subject-card {
-      background-color: white;
-      color: #111827;
-      border-radius: 8px;
-      padding: 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-    }
-    .subject-card:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    .subject-card h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-    .progress-bar {
-      background-color: #e5e7eb;
-      border-radius: 9999px;
+      border-radius: 18px;
+      transition: all 0.2s ease;
+      position: relative;
       overflow: hidden;
-      height: 16px;
-      margin-top: 8px;
     }
-    .progress-fill {
+
+    .subject-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
       height: 100%;
-      transition: width 0.3s ease;
-      background: linear-gradient(to right, #1E3A8A, #3B82F6);
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+      transition: left 0.5s ease;
     }
-    @media (min-width: 768px) {
-      .subject-grid {
-        grid-template-columns: repeat(2, 1fr);
+
+    .subject-header:hover::before {
+      left: 100%;
+    }
+
+    .subject-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1e3a8a;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subject-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hours-display {
+      color: #374151;
+      font-weight: 500;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+    }
+
+    .expand-icon {
+      color: #3b82f6;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .chapters-container {
+      padding: 0 2rem 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .expanded .chapters-container {
+      max-height: 2000px;
+    }
+
+    .chapter-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(6, 182, 212, 0.05));
+      border-radius: 15px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .chapter-card:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.08));
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .chapter-header {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .chapter-header:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .chapter-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #1e40af;
+    }
+
+    .chapter-content {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chapter-expanded .chapter-content {
+      max-height: 500px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .hours-input-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+      font-size: 0.9rem;
+    }
+
+    .hours-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .hours-input:focus {
+      border-color: #3b82f6;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .methods-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1e40af;
+      font-size: 1rem;
+    }
+
+    .method-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .method-item:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .method-checkbox {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.75rem;
+      cursor: pointer;
+      accent-color: #3b82f6;
+      transform: scale(1.1);
+    }
+
+    .method-label {
+      color: #374151;
+      font-weight: 400;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .stats-bar {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(10px);
+      min-width: 200px;
+      z-index: 100;
+    }
+
+    .stats-title {
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .total-hours {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3b82f6;
+      text-align: center;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
       }
-      .menu-button {
-        display: none;
-      }
-      .desktop-buttons {
-        display: flex;
-        gap: 16px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-    @media (min-width: 1024px) {
-      .subject-grid {
-        grid-template-columns: repeat(3, 1fr);
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .title {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .subject-header {
+        padding: 1rem 1.5rem;
+      }
+
+      .chapters-container {
+        padding: 0 1.5rem 1rem;
+      }
+
+      .stats-bar {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        position: fixed;
+      }
+    }
+
+    /* Animation delays for staggered effect */
+    .subject-card:nth-child(2) { animation-delay: 0.1s; }
+    .subject-card:nth-child(3) { animation-delay: 0.2s; }
+    .subject-card:nth-child(4) { animation-delay: 0.3s; }
+    .subject-card:nth-child(5) { animation-delay: 0.4s; }
+    .subject-card:nth-child(6) { animation-delay: 0.5s; }
+    .subject-card:nth-child(7) { animation-delay: 0.6s; }
+    .subject-card:nth-child(8) { animation-delay: 0.7s; }
+    .subject-card:nth-child(9) { animation-delay: 0.8s; }
+    .subject-card:nth-child(10) { animation-delay: 0.9s; }
+    .subject-card:nth-child(11) { animation-delay: 1.0s; }
   </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+  <div class="container">
+    <div class="header">
+      <h1 class="title">✨ StudyCielo ✨</h1>
+      <p class="subtitle">Neela's Study Tracker</p>
+    </div>
 
-    // Subject and chapter configuration
-    const subjects = [
-      {
-        name: "Biology",
-        papers: [
-          { name: "1st Paper", chapters: Array.from({ length: 12 }, (_, i) => `Chapter ${i + 1}`) },
-          { name: "2nd Paper", chapters: Array.from({ length: 12 }, (_, i) => `Chapter ${i + 1}`) },
-        ],
-        methods: ["Watch video", "Read books", "Take notes", "Solve typewise questions", "Read medical guide"],
-      },
-      {
-        name: "Physics",
-        papers: [
-          { name: "1st Paper", chapters: Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`) },
-          { name: "2nd Paper", chapters: Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`) },
-        ],
-        methods: ["Watch video", "Read books", "Take notes", "Solve typewise questions", "Read medical guide"],
-      },
-      {
-        name: "Chemistry",
-        papers: [
-          { name: "1st Paper", chapters: Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`) },
-          { name: "2nd Paper", chapters: Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`) },
-        ],
-        methods: ["Watch video", "Read books", "Take notes", "Solve typewise questions", "Read medical guide"],
-      },
-      {
-        name: "Higher Maths",
-        papers: [
-          { name: "1st Paper", chapters: Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`) },
-          { name: "2nd Paper", chapters: Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`) },
-        ],
-        methods: ["Watch video", "Solve problems", "Take subject-ending notes"],
-      },
-      {
-        name: "ICT",
-        papers: [{ name: "", chapters: Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`) }],
-        methods: ["Watch video", "Read main book", "Read guide book", "Practice"],
-      },
-    ];
+    <div id="subjects-container"></div>
+  </div>
 
-    // Load and save data to localStorage
-    const loadData = () => JSON.parse(localStorage.getItem("studyTrackerData")) || {};
-    const saveData = (data) => localStorage.setItem("studyTrackerData", JSON.stringify(data));
+  <div class="stats-bar">
+    <div class="stats-title">Total Study Hours</div>
+    <div class="total-hours" id="total-hours">0</div>
+  </div>
 
-    // Main App Component
-    const App = () => {
-      const [data, setData] = useState(loadData);
-      const [currentSubject, setCurrentSubject] = useState(null);
-      const [menuOpen, setMenuOpen] = useState(false);
-
-      useEffect(() => {
-        saveData(data);
-      }, [data]);
-
-      const toggleMethod = (subjectName, paperName, chapter, method) => {
-        setData((prev) => {
-          const newData = { ...prev };
-          if (!newData[subjectName]) newData[subjectName] = {};
-          if (!newData[subjectName][paperName]) newData[subjectName][paperName] = {};
-          if (!newData[subjectName][paperName][chapter]) newData[subjectName][paperName][chapter] = { methods: {}, hours: 0 };
-          newData[subjectName][paperName][chapter].methods[method] = !newData[subjectName][paperName][chapter].methods[method];
-          return newData;
-        });
-      };
-
-      const addHours = (subjectName, paperName, chapter, hours) => {
-        const numHours = parseFloat(hours);
-        if (isNaN(numHours) || numHours < 0) {
-          alert("Please enter a valid number of hours.");
-          return;
-        }
-        setData((prev) => {
-          const newData = { ...prev };
-          if (!newData[subjectName]) newData[subjectName] = {};
-          if (!newData[subjectName][paperName]) newData[subjectName][paperName] = {};
-          if (!newData[subjectName][paperName][chapter]) newData[subjectName][paperName][chapter] = { methods: {}, hours: 0 };
-          newData[subjectName][paperName][chapter].hours += numHours;
-          return newData;
-        });
-      };
-
-      const resetProgress = () => {
-        if (window.confirm("Are you sure you want to reset all progress?")) {
-          setData({});
-          localStorage.removeItem("studyTrackerData");
-        }
-      };
-
-      const getTotalHours = (subjectName) => {
-        if (!data[subjectName]) return 0;
-        return Object.values(data[subjectName]).reduce((total, paper) => {
-          return total + Object.values(paper).reduce((paperTotal, chapter) => paperTotal + (chapter.hours || 0), 0);
-        }, 0);
-      };
-
-      const getMethodsCompleted = (subjectName, paperName, chapter, methods) => {
-        if (!data[subjectName]?.[paperName]?.[chapter]?.methods) return 0;
-        return methods.reduce((count, method) => count + (data[subjectName][paperName][chapter].methods[method] ? 1 : 0), 0);
-      };
-
-      if (currentSubject) {
-        const subject = subjects.find((s) => s.name === currentSubject);
-        return (
-          <div className="container">
-            <header className="header">
-              <button onClick={() => setCurrentSubject(null)}>Back</button>
-              <h1>StudySky</h1>
-              <div></div>
-            </header>
-            <h2 className="subject-title">{subject.name}</h2>
-            <p className="total-hours">Total Hours: {getTotalHours(subject.name).toFixed(2)}</p>
-            {subject.papers.map((paper) => (
-              <div key={paper.name} className="paper-section">
-                {paper.name && <h3 className="paper-title">{paper.name}</h3>}
-                {paper.chapters.map((chapter) => (
-                  <div key={chapter} className="chapter-card">
-                    <h4 className="chapter-title">{chapter}</h4>
-                    <p>
-                      Methods Completed: {getMethodsCompleted(subject.name, paper.name || subject.name, chapter, subject.methods)}/{subject.methods.length}
-                    </p>
-                    <div>
-                      {subject.methods.map((method) => (
-                        <label key={method} className="checkbox-label">
-                          <input
-                            type="checkbox"
-                            checked={data[subject.name]?.[paper.name || subject.name]?.[chapter]?.methods?.[method] || false}
-                            onChange={() => toggleMethod(subject.name, paper.name || subject.name, chapter, method)}
-                          />
-                          <span>{method}</span>
-                        </label>
-                      ))}
-                    </div>
-                    <div className="hours-section">
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.1"
-                        placeholder="Hours"
-                        className="hours-input"
-                        onKeyPress={(e) => {
-                          if (e.key === "Enter") {
-                            addHours(subject.name, paper.name || subject.name, chapter, e.target.value);
-                            e.target.value = "";
-                          }
-                        }}
-                      />
-                      <span>Hours: {(data[subject.name]?.[paper.name || subject.name]?.[chapter]?.hours || 0).toFixed(2)}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        );
-      }
-
-      return (
-        <div className="container">
-          <header className="header">
-            <h1>StudySky</h1>
-            <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? "✖" : "☰"}
-            </button>
-            <div className="desktop-buttons">
-              <button className="reset-button" onClick={resetProgress}>
-                Reset Progress
-              </button>
-            </div>
-          </header>
-          {menuOpen && (
-            <div className="menu-content">
-              <button className="reset-button" onClick={resetProgress}>
-                Reset Progress
-              </button>
-            </div>
-          )}
-          <div className="subject-grid">
-            {subjects.map((subject) => {
-              const totalHours = getTotalHours(subject.name);
-              return (
-                <div
-                  key={subject.name}
-                  className="subject-card"
-                  onClick={() => setCurrentSubject(subject.name)}
-                >
-                  <h2>{subject.name}</h2>
-                  <p className="total-hours">Total Hours: {totalHours.toFixed(2)}</p>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${Math.min((totalHours / 100) * 100, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      );
+  <script>
+    const subjects = {
+      "Bangla": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`),
+      "English": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`),
+      "Biology 1st Paper": Array.from({ length: 12 }, (_, i) => `Chapter ${i + 1}`),
+      "Biology 2nd Paper": Array.from({ length: 12 }, (_, i) => `Chapter ${i + 1}`),
+      "Physics 1st Paper": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`),
+      "Physics 2nd Paper": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`),
+      "Chemistry 1st Paper": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
+      "Chemistry 2nd Paper": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
+      "ICT": Array.from({ length: 5 }, (_, i) => `Chapter ${i + 1}`),
+      "Higher Maths": Array.from({ length: 10 }, (_, i) => `Chapter ${i + 1}`)
     };
 
-    ReactDOM.render(<App />, document.getElementById("root"));
+    const studyMethods = {
+      "Bangla": ["Read Book", "Watch Video", "Solve Questions"],
+      "English": ["Read Book", "Practice Test Paper", "Solve Questions"],
+      "Biology 1st Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "Biology 2nd Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "Physics 1st Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "Physics 2nd Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "Chemistry 1st Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "Chemistry 2nd Paper": ["Watch Video", "Read Books", "Take Notes", "Solve Typewise Questions", "Read Medical Guide"],
+      "ICT": ["Watch Video", "Read Main Book", "Read Guide Book", "Practice"],
+      "Higher Maths": ["Watch Video", "Solve Problems", "Take Subject-Ending Notes"]
+    };
+
+    const maxHours = {
+      "Bangla": 50,
+      "English": 50,
+      "Biology 1st Paper": Infinity,
+      "Biology 2nd Paper": Infinity,
+      "Physics 1st Paper": Infinity,
+      "Physics 2nd Paper": Infinity,
+      "Chemistry 1st Paper": Infinity,
+      "Chemistry 2nd Paper": Infinity,
+      "ICT": Infinity,
+      "Higher Maths": Infinity
+    };
+
+    // Initialize progress data
+    let progress = {};
+    Object.keys(subjects).forEach(subject => {
+      progress[subject] = subjects[subject].map(() => ({
+        methods: studyMethods[subject].map(() => false),
+        hours: 0
+      }));
+    });
+
+    let expandedSubject = null;
+    let expandedChapter = null;
+
+    function toggleSubject(subject) {
+      const subjectCard = document.getElementById(`subject-${subject.replace(/\s+/g, '-')}`);
+      
+      if (expandedSubject === subject) {
+        subjectCard.classList.remove('expanded');
+        expandedSubject = null;
+      } else {
+        // Close previously expanded subject
+        if (expandedSubject) {
+          const prevCard = document.getElementById(`subject-${expandedSubject.replace(/\s+/g, '-')}`);
+          prevCard.classList.remove('expanded');
+        }
+        subjectCard.classList.add('expanded');
+        expandedSubject = subject;
+      }
+      expandedChapter = null;
+      updateChapterStates();
+    }
+
+    function toggleChapter(subject, chapterIndex) {
+      const chapterKey = `${subject}-${chapterIndex}`;
+      const chapterCard = document.getElementById(`chapter-${subject.replace(/\s+/g, '-')}-${chapterIndex}`);
+      
+      if (expandedChapter === chapterKey) {
+        chapterCard.classList.remove('chapter-expanded');
+        expandedChapter = null;
+      } else {
+        // Close previously expanded chapter
+        if (expandedChapter) {
+          const [prevSubject, prevIndex] = expandedChapter.split('-');
+          const prevCard = document.getElementById(`chapter-${prevSubject.replace(/\s+/g, '-')}-${prevIndex}`);
+          if (prevCard) prevCard.classList.remove('chapter-expanded');
+        }
+        chapterCard.classList.add('chapter-expanded');
+        expandedChapter = chapterKey;
+      }
+    }
+
+    function updateChapterStates() {
+      expandedChapter = null;
+      document.querySelectorAll('.chapter-card').forEach(card => {
+        card.classList.remove('chapter-expanded');
+      });
+    }
+
+    function handleCheckboxChange(subject, chapterIndex, methodIndex) {
+      progress[subject][chapterIndex].methods[methodIndex] = !progress[subject][chapterIndex].methods[methodIndex];
+    }
+
+    function handleHoursChange(subject, chapterIndex, hours) {
+      let parsedHours = parseFloat(hours) || 0;
+      const totalHours = progress[subject].reduce((sum, chapter, idx) =>
+        idx === chapterIndex ? sum + parsedHours : sum + chapter.hours, 0);
+      
+      if (maxHours[subject] !== Infinity && totalHours > maxHours[subject]) {
+        parsedHours = Math.max(0, maxHours[subject] - (totalHours - parsedHours));
+      }
+      
+      progress[subject][chapterIndex].hours = parsedHours;
+      updateSubjectHours(subject);
+      updateTotalHours();
+    }
+
+    function getTotalHours(subject) {
+      return progress[subject].reduce((sum, chapter) => sum + chapter.hours, 0);
+    }
+
+    function updateSubjectHours(subject) {
+      const hoursDisplay = document.getElementById(`hours-${subject.replace(/\s+/g, '-')}`);
+      const totalHours = getTotalHours(subject);
+      hoursDisplay.textContent = `Hours: ${totalHours}${maxHours[subject] !== Infinity ? '/50' : ''}`;
+    }
+
+    function updateTotalHours() {
+      const totalHours = Object.keys(subjects).reduce((sum, subject) => sum + getTotalHours(subject), 0);
+      document.getElementById('total-hours').textContent = totalHours.toFixed(1);
+    }
+
+    function createSubjectHTML(subject) {
+      const subjectId = subject.replace(/\s+/g, '-');
+      return `
+        <div class="subject-card" id="subject-${subjectId}">
+          <div class="subject-header" onclick="toggleSubject('${subject}')">
+            <h2 class="subject-name">${subject}</h2>
+            <div class="subject-info">
+              <span class="hours-display" id="hours-${subjectId}">Hours: 0${maxHours[subject] !== Infinity ? '/50' : ''}</span>
+              <span class="expand-icon">▼</span>
+            </div>
+          </div>
+          <div class="chapters-container">
+            ${subjects[subject].map((chapter, chapterIndex) => createChapterHTML(subject, chapter, chapterIndex)).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function createChapterHTML(subject, chapter, chapterIndex) {
+      const subjectId = subject.replace(/\s+/g, '-');
+      return `
+        <div class="chapter-card" id="chapter-${subjectId}-${chapterIndex}">
+          <div class="chapter-header" onclick="toggleChapter('${subject}', ${chapterIndex})">
+            <h3 class="chapter-name">${chapter}</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="chapter-content">
+            <div class="hours-input-container">
+              <label class="input-label">Study Hours:</label>
+              <input
+                type="number"
+                class="hours-input"
+                step="0.5"
+                min="0"
+                value="0"
+                onchange="handleHoursChange('${subject}', ${chapterIndex}, this.value)"
+                oninput="handleHoursChange('${subject}', ${chapterIndex}, this.value)"
+              />
+            </div>
+            <h4 class="methods-title">Study Methods:</h4>
+            ${studyMethods[subject].map((method, methodIndex) => `
+              <div class="method-item">
+                <input
+                  type="checkbox"
+                  class="method-checkbox"
+                  id="method-${subjectId}-${chapterIndex}-${methodIndex}"
+                  onchange="handleCheckboxChange('${subject}', ${chapterIndex}, ${methodIndex})"
+                />
+                <label class="method-label" for="method-${subjectId}-${chapterIndex}-${methodIndex}">${method}</label>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function initializeApp() {
+      const container = document.getElementById('subjects-container');
+      container.innerHTML = Object.keys(subjects).map(subject => createSubjectHTML(subject)).join('');
+      
+      // Trigger animations
+      setTimeout(() => {
+        document.querySelectorAll('.subject-card').forEach(card => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        });
+      }, 100);
+    }
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', initializeApp);
   </script>
 </body>
 </html>
